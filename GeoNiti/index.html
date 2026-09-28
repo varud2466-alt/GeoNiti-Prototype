@@ -1,0 +1,3775 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GeoNiti (भू-नीति) — National Digital Platform for Land Governance</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      colors: {
+        brand: {
+          dark: '#080c14',
+          surface: '#0f1422',
+          card: '#141b2d',
+          border: '#1f293d',
+          cyan: '#06b6d4',
+          emerald: '#10b981',
+          amber: '#f59e0b',
+          crimson: '#ef4444'
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+body {
+  background-color: #080c14;
+  color: #e2e8f0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.glass-nav {
+  background: rgba(12, 17, 29, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.glass-card {
+  background: rgba(16, 22, 38, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(8px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+/* Section offset for sticky top navbar */
+section {
+  scroll-margin-top: 5.5rem;
+}
+</style>
+
+</head>
+
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-black">
+
+<!-- ================= TOP STICKY NAVIGATION ================= -->
+
+<header class="sticky top-0 z-50 glass-nav border-b border-brand-border/80 px-4 lg:px-8 py-3 transition-all">
+
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+
+<!-- Brand Logo / Emblem / Header Titles -->
+
+<div class="flex items-center gap-3">
+
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-emerald-500 to-amber-400 p-[2px] shadow-lg shadow-cyan-900/30">
+
+<div class="w-full h-full bg-[#0b101c] rounded-[10px] flex items-center justify-center">
+
+<span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-lg">
+भू
+</span>
+
+</div>
+</div>
+
+<div>
+
+<div class="flex items-center gap-2">
+
+<span class="font-extrabold text-white text-lg tracking-tight">
+भू-नीति | GeoNiti
+</span>
+
+<span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">
+Govt. of India
+</span>
+
+<span class="text-[10px] text-gray-400 hidden sm:inline">
+NITI Aayog • MoRD • DST
+</span>
+
+</div>
+
+<p class="text-[11px] text-gray-400 hidden sm:block">
+National Strategic Platform for Land Governance Research & Policy Innovation
+</p>
+
+</div>
+</div>
+
+<!-- Live Sync Indicators & Header Actions -->
+
+<div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800 text-[11px] text-emerald-300 font-mono">
+
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+
+<span>ULPIN / BHUVAN SYNCED</span>
+
+</div>
+
+<button
+onclick="openModal('modal-sandbox')"
+class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-medium border border-gray-700 transition flex items-center gap-1.5">
+
+<svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10l8 4m0-10v10"/>
+</svg>
+
+Sandboxed Data
+
+</button>
+
+<button
+onclick="openModal('modal-simulator')"
+class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold text-xs transition shadow-md shadow-cyan-900/40 flex items-center gap-1.5">
+
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+</svg>
+
+Launch Simulator
+
+</button>
+
+</div>
+</div>
+
+<!-- Section Navigation Buttons -->
+
+<nav class="max-w-7xl mx-auto mt-2.5 pt-2 border-t border-brand-border/40 flex items-center gap-1 overflow-x-auto custom-scrollbar text-xs">
+
+<button
+onclick="scrollToSec('sec-overview', this)"
+class="nav-btn px-3 py-1 rounded-md text-cyan-400 bg-cyan-950/50 border border-cyan-800 font-semibold whitespace-nowrap">
+Overview
+</button>
+
+<button
+onclick="scrollToSec('sec-cadastral', this)"
+class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition">
+Cadastral Analytics
+</button>
+
+<button
+onclick="scrollToSec('sec-telemetry', this)"
+class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition">
+Benchmark Telemetry
+</button>
+
+<button
+onclick="scrollToSec('sec-paradigm', this)"
+class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition">
+Paradigm Shift
+</button>
+
+<button
+onclick="scrollToSec('sec-scope', this)"
+class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition">
+Scope of Study & Matrix
+</button>
+
+<button
+onclick="scrollToSec('sec-workbenches', this)"
+class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition">
+Workbenches
+</button>
+
+</nav>
+
+</header>
+<!-- ================= MAIN CONTAINER ================= -->
+
+<main
+    class="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 space-y-12"
+>
+
+    <!-- ===================================================== -->
+    <!-- 1. EXECUTIVE OVERVIEW SECTION -->
+    <!-- ===================================================== -->
+
+    <section
+        id="sec-overview"
+        class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
+    >
+
+        <!-- Left Hero Banner -->
+
+        <div
+            class="lg:col-span-8 glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden border border-brand-border"
+        >
+
+            <div
+                class="absolute -top-14 -right-14 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
+            ></div>
+
+            <div>
+
+                <div
+                    class="flex items-center gap-2 text-xs font-mono tracking-wider text-cyan-400 mb-2"
+                >
+
+                    <span
+                        class="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-800"
+                    >
+                        EXECUTIVE COMMAND CENTER
+                    </span>
+
+                    <span>
+                        • Cabinet Sub-Committee on Land Modernization
+                    </span>
+
+                </div>
+
+
+                <h1
+                    class="text-2xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight mt-2"
+                >
+                    National Strategic Platform for Land Governance Research & Policy Innovation
+                </h1>
+
+
+                <p
+                    class="text-gray-300 text-sm sm:text-base mt-3 max-w-2xl leading-relaxed"
+                >
+                    Fostering evidence-based land administration, verifiable
+                    multi-spectral cadastral science, and sovereign AI-driven
+                    policy experimentation across India’s 28 States and
+                    8 Union Territories.
+                </p>
+
+            </div>
+
+
+            <div
+                class="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-brand-border/60"
+            >
+
+                <button
+                    onclick="openModal('modal-gis')"
+                    class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-cyan-900/30"
+                >
+
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 20l-5.447-2.724A1.998 1.998 0 013 16.382V5.618a1.998 1.998 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1.998 1.998 0 0021 18.382V7.618a1.998 1.998 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                        />
+                    </svg>
+
+                    Launch GIS Digital Twin
+
+                </button>
+
+
+                <button
+                    onclick="openModal('modal-simulator')"
+                    class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-900/30"
+                >
+
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                    </svg>
+
+                    Simulate Policy Reform
+
+                </button>
+
+
+                <button
+                    onclick="openModal('modal-sandbox')"
+                    class="px-4 py-2 rounded-xl bg-brand-surface hover:bg-gray-800 text-amber-300 border border-amber-600/40 text-xs sm:text-sm font-medium transition"
+                >
+                    Sandboxed Data
+                </button>
+
+
+                <button
+                    onclick="openModal('modal-rfp')"
+                    class="px-4 py-2 rounded-xl bg-brand-surface hover:bg-gray-800 text-amber-300 border border-amber-600/40 text-xs sm:text-sm font-medium transition"
+                >
+                    Submit Research RFP
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Geospatial Telemetry Widget -->
+
+        <div
+            class="lg:col-span-4 glass-card rounded-2xl p-5 flex flex-col justify-between border border-brand-border"
+        >
+
+            <div>
+
+                <div
+                    class="flex items-center justify-between"
+                >
+
+                    <span
+                        class="text-xs font-semibold text-gray-200 flex items-center gap-2"
+                    >
+
+                        <span
+                            class="w-2 h-2 rounded-full bg-cyan-400"
+                        ></span>
+
+                        Geospatial Telemetry Node
+
+                    </span>
+
+
+                    <span
+                        class="px-2 py-0.5 rounded bg-brand-dark text-[10px] text-cyan-400 border border-cyan-900 font-mono"
+                    >
+                        LIVE NIC-DST
+                    </span>
+
+                </div>
+
+
+                <!-- Synthetic Mini Map Display -->
+
+                <div
+                    class="mt-3 relative h-36 rounded-xl bg-gradient-to-br from-emerald-950/40 to-cyan-950/40 border border-brand-border p-3 overflow-hidden flex flex-col justify-between"
+                >
+
+                    <div
+                        class="absolute inset-0 opacity-20 pointer-events-none"
+                        style="background-image: radial-gradient(#06b6d4 1px, transparent 1px); background-size: 16px 16px;"
+                    ></div>
+
+
+                    <div
+                        class="flex justify-between items-start z-10"
+                    >
+
+                        <span
+                            class="text-[10px] font-mono bg-black/70 px-2 py-0.5 rounded text-cyan-300"
+                        >
+                            Lat: 28.6139° N | Long: 77.2090° E
+                        </span>
+
+
+                        <button
+                            onclick="openModal('modal-gis')"
+                            class="text-[10px] px-2 py-0.5 rounded bg-cyan-500 text-black font-bold hover:bg-cyan-400"
+                        >
+                            Inspect (Click)
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="z-10 flex justify-between items-end"
+                    >
+
+                        <div>
+
+                            <p
+                                class="text-[10px] text-gray-400"
+                            >
+                                Target Cadastre
+                            </p>
+
+                            <p
+                                class="text-xs font-bold text-white font-mono"
+                            >
+                                ULPIN: 28D-77E-8921
+                            </p>
+
+                        </div>
+
+
+                        <div class="text-right">
+
+                            <span
+                                class="text-[10px] text-emerald-400 font-mono"
+                            >
+                                Q-Score: 99.8%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-brand-border font-mono text-center"
+            >
+
+                <div
+                    class="p-2.5 rounded-xl bg-brand-surface/60 border border-brand-border/40"
+                >
+
+                    <p
+                        class="text-[11px] text-gray-400"
+                    >
+                        Drone Survey Feeds
+                    </p>
+
+                    <p
+                        class="text-lg font-bold text-white"
+                    >
+                        318 Districts
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="p-2.5 rounded-xl bg-brand-surface/60 border border-brand-border/40"
+                >
+
+                    <p
+                        class="text-[11px] text-gray-400"
+                    >
+                        CORS Stations
+                    </p>
+
+                    <p
+                        class="text-lg font-bold text-cyan-400"
+                    >
+                        1,024 Active
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- SECTION NAVIGATION -->
+    <!-- ===================================================== -->
+
+    <nav
+        class="max-w-7xl mx-auto mt-2.5 pt-2 border-t border-brand-border/40 flex items-center gap-1 overflow-x-auto custom-scrollbar text-xs"
+    >
+
+        <button
+            onclick="scrollToSec('sec-overview', this)"
+            class="nav-btn px-3 py-1 rounded-md text-cyan-400 bg-cyan-950/50 border border-cyan-800 font-semibold whitespace-nowrap"
+        >
+            Overview
+        </button>
+
+
+        <button
+            onclick="scrollToSec('sec-cadastral', this)"
+            class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition"
+        >
+            Cadastral Analytics
+        </button>
+
+
+        <button
+            onclick="scrollToSec('sec-telemetry', this)"
+            class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition"
+        >
+            Benchmark Telemetry
+        </button>
+
+
+        <button
+            onclick="scrollToSec('sec-paradigm', this)"
+            class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition"
+        >
+            Paradigm Shift
+        </button>
+
+
+        <button
+            onclick="scrollToSec('sec-scope', this)"
+            class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition"
+        >
+            Scope of Study & Matrix
+        </button>
+
+
+        <button
+            onclick="scrollToSec('sec-workbenches', this)"
+            class="nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition"
+        >
+            Workbenches
+        </button>
+
+    </nav>
+
+
+    <!-- ===================================================== -->
+    <!-- 2. REAL-TIME CADASTRAL ANALYTICS -->
+    <!-- ===================================================== -->
+
+    <section
+        id="sec-cadastral"
+        class="space-y-4"
+    >
+
+        <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+        >
+
+            <div>
+
+                <span
+                    class="text-xs font-mono uppercase text-cyan-400 tracking-wider"
+                >
+                    Real-Time Cadastral Intelligence Analytics
+                </span>
+
+                <h2
+                    class="text-xl sm:text-2xl font-bold text-white"
+                >
+                    National Land Tenure & Litigation Distribution
+                </h2>
+
+            </div>
+
+
+            <div
+                class="text-xs text-gray-400 font-mono flex items-center gap-2"
+            >
+
+                <span
+                    class="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                ></span>
+
+                Click segments & buttons below to filter
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
+
+            <!-- CHART 1: Land Tenure Donut Chart -->
+
+            <div
+                class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between"
+            >
+
+                <div
+                    class="flex items-center justify-between mb-4"
+                >
+
+                    <div>
+
+                        <h3
+                            class="font-bold text-white text-base flex items-center gap-2"
+                        >
+
+                            <span
+                                class="w-2 h-2 rounded-full bg-emerald-400"
+                            ></span>
+
+                            National Land Tenure Classification
+
+                        </h3>
+
+
+                        <p
+                            class="text-xs text-gray-400"
+                        >
+                            Aggregated across 32.8 Crore digitized land parcels
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800"
+                    >
+                        DILRMP Live
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-around gap-6 my-2"
+                >
+
+                    <!-- Interactive Donut SVG -->
+
+                    <div
+                        class="relative w-44 h-44 flex items-center justify-center"
+                    >
+
+                        <svg
+                            class="w-44 h-44 transform -rotate-90"
+                            viewBox="0 0 100 100"
+                        >
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#1f2937"
+                                stroke-width="12"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#10b981"
+                                stroke-width="12"
+                                stroke-dasharray="105.6 251.2"
+                                stroke-dashoffset="0"
+                                class="cursor-pointer"
+                                onclick="filterTenure('conclusive')"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#06b6d4"
+                                stroke-width="12"
+                                stroke-dasharray="70.3 251.2"
+                                stroke-dashoffset="-105.6"
+                                class="cursor-pointer"
+                                onclick="filterTenure('svamitva')"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#f43f5e"
+                                stroke-width="12"
+                                stroke-dasharray="45.2 251.2"
+                                stroke-dashoffset="-175.9"
+                                class="cursor-pointer"
+                                onclick="filterTenure('litigation')"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#64748b"
+                                stroke-width="12"
+                                stroke-dasharray="30.1 251.2"
+                                stroke-dashoffset="-221.1"
+                                class="cursor-pointer"
+                                onclick="filterTenure('unsurveyed')"
+                            ></circle>
+
+                        </svg>
+
+
+                        <div
+                            class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+                        >
+
+                            <span
+                                id="tenure-center-val"
+                                class="text-2xl font-extrabold text-white"
+                            >
+                                32.8 Cr
+                            </span>
+
+                            <span
+                                id="tenure-center-sub"
+                                class="text-[10px] text-gray-400 font-mono"
+                            >
+                                100% Parcels
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Tenure Legend -->
+
+                    <div
+                        class="w-full sm:w-auto space-y-2.5 text-xs"
+                    >
+
+                        <button
+                            onclick="filterTenure('conclusive')"
+                            class="w-full flex items-center justify-between gap-5 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-emerald-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-emerald-400"
+                                ></span>
+
+                                Conclusive Title
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-emerald-400"
+                            >
+                                42%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterTenure('svamitva')"
+                            class="w-full flex items-center justify-between gap-5 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-cyan-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-cyan-400"
+                                ></span>
+
+                                SVAMITVA Survey
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-cyan-400"
+                            >
+                                28%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterTenure('litigation')"
+                            class="w-full flex items-center justify-between gap-5 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-rose-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-rose-400"
+                                ></span>
+
+                                In Litigation
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-rose-400"
+                            >
+                                18%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterTenure('unsurveyed')"
+                            class="w-full flex items-center justify-between gap-5 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-gray-800 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-gray-500"
+                                ></span>
+
+                                Unsurveyed
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-gray-400"
+                            >
+                                12%
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="tenure-insight-box"
+                    class="mt-3 p-3 rounded-xl bg-brand-surface border border-brand-border text-xs text-gray-300 flex items-center justify-between"
+                >
+
+                    <span>
+                        Leading implementation in Karnataka, Haryana,
+                        and Gujarat under Torrens-guaranteed frameworks.
+                    </span>
+
+                    <button
+                        onclick="resetTenure()"
+                        class="text-cyan-400 hover:underline text-[11px] font-mono"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHART 2: Dispute Caseload -->
+
+            <div
+                class="glass-card rounded-2xl p-6 border border-brand-border flex flex-col justify-between"
+            >
+
+                <div
+                    class="flex items-center justify-between mb-4"
+                >
+
+                    <div>
+
+                        <h3
+                            class="font-bold text-white text-base flex items-center gap-2"
+                        >
+
+                            <span
+                                class="w-2 h-2 rounded-full bg-rose-400"
+                            ></span>
+
+                            Revenue & Land Dispute Caseload
+
+                        </h3>
+
+                        <p
+                            class="text-xs text-gray-400"
+                        >
+                            Indicative composition of active land-related disputes
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-around gap-6 my-2"
+                >
+
+                    <div
+                        class="relative w-44 h-44 flex items-center justify-center"
+                    >
+
+                        <svg
+                            class="w-44 h-44 transform -rotate-90"
+                            viewBox="0 0 100 100"
+                        >
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#1f2937"
+                                stroke-width="12"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#f43f5e"
+                                stroke-width="12"
+                                stroke-dasharray="95.5 251.2"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#fb7185"
+                                stroke-width="12"
+                                stroke-dasharray="85.4 251.2"
+                                stroke-dashoffset="-95.5"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#38bdf8"
+                                stroke-width="12"
+                                stroke-dasharray="40.2 251.2"
+                                stroke-dashoffset="-180.9"
+                            ></circle>
+
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#34d399"
+                                stroke-width="12"
+                                stroke-dasharray="30.1 251.2"
+                                stroke-dashoffset="-221.1"
+                            ></circle>
+
+                        </svg>
+
+
+                        <div
+                            class="absolute inset-0 flex flex-col items-center justify-center"
+                        >
+
+                            <span
+                                id="dispute-center-val"
+                                class="text-2xl font-extrabold text-white"
+                            >
+                                38%
+                            </span>
+
+                            <span
+                                class="text-[10px] text-gray-400 font-mono"
+                            >
+                                Boundary
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="w-full sm:w-auto space-y-2.5 text-xs"
+                    >
+
+                        <button
+                            onclick="filterDispute('boundary')"
+                            class="w-full flex items-center justify-between gap-4 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-rose-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-rose-500"
+                                ></span>
+
+                                Boundary & Encroachment
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-rose-400"
+                            >
+                                38%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterDispute('title')"
+                            class="w-full flex items-center justify-between gap-4 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-rose-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-rose-400"
+                                ></span>
+
+                                Title & Inheritance
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-rose-300"
+                            >
+                                34%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterDispute('tenancy')"
+                            class="w-full flex items-center justify-between gap-4 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-sky-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-sky-400"
+                                ></span>
+
+                                Tenancy & Leasehold
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-sky-400"
+                            >
+                                16%
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            onclick="filterDispute('eminent')"
+                            class="w-full flex items-center justify-between gap-4 px-3 py-1.5 rounded-lg bg-brand-surface hover:bg-emerald-950/40 border border-brand-border transition text-left"
+                        >
+
+                            <span class="flex items-center gap-2">
+                                <span
+                                    class="w-2.5 h-2.5 rounded-full bg-emerald-400"
+                                ></span>
+
+                                Eminent Domain
+
+                            </span>
+
+                            <span
+                                class="font-mono font-bold text-emerald-400"
+                            >
+                                12%
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="dispute-insight-box"
+                    class="mt-3 p-3 rounded-xl bg-brand-surface border border-brand-border text-xs text-gray-300 flex items-center justify-between"
+                >
+
+                    <span>
+                        <strong>Boundary & Encroachment Suits:</strong>
+                        Primary driver is missing GIS boundary markers.
+                        Mitigation: SVAMITVA drone demarcation & ULPIN
+                        spatial indexing.
+                    </span>
+
+                    <span
+                        class="text-rose-400 font-mono text-[11px] whitespace-nowrap ml-2"
+                    >
+                        Avg Disposal: 8.4 Yrs
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- 3. BENCHMARK TELEMETRY -->
+    <!-- ===================================================== -->
+
+    <section
+        id="sec-telemetry"
+        class="space-y-4"
+    >
+
+        <div
+            class="flex items-center justify-between"
+        >
+
+            <div>
+
+                <span
+                    class="text-xs font-mono uppercase text-cyan-400 tracking-wider"
+                >
+                    National Sovereign Indicators
+                </span>
+
+                <h2
+                    class="text-xl sm:text-2xl font-bold text-white"
+                >
+                    Land Governance Benchmark Telemetry
+                </h2>
+
+            </div>
+
+
+            <span
+                class="text-xs text-gray-400 font-mono hidden sm:inline"
+            >
+                Click any card below to trigger simulated real-time data audit log.
+            </span>
+
+        </div>
+
+
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+
+            <!-- Metric 1 -->
+
+            <div
+                onclick="toast('Auditing ULPIN Ledger: 328,491,204 records verified against Bhuvan Spatial Grid.')"
+                class="cursor-pointer glass-card rounded-2xl p-5 border border-brand-border hover:border-cyan-500/60 transition group"
+            >
+
+                <div
+                    class="flex items-center justify-between text-gray-400 text-xs"
+                >
+
+                    <span
+                        class="p-2 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-400"
+                    >
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <span
+                        class="font-mono text-emerald-400 font-bold"
+                    >
+                        +4.8%
+                    </span>
+
+                </div>
+
+
+                <p
+                    class="text-xs text-gray-400 mt-3 font-mono"
+                >
+                    ULPIN COVERAGE
+                </p>
+
+                <p
+                    class="text-2xl sm:text-3xl font-extrabold text-white mt-1 group-hover:text-cyan-400 transition"
+                >
+                    32.8 Cr
+                </p>
+
+                <p
+                    class="text-[11px] text-gray-400 mt-2"
+                >
+                    Digitized land parcels indexed through the Unified Land Parcel Identification Number.
+                </p>
+
+                <div
+                    class="w-full bg-gray-800 h-1.5 rounded-full mt-3 overflow-hidden"
+                >
+
+                    <div
+                        class="bg-cyan-500 h-full w-[84%]"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Metric 2 -->
+
+            <div
+                onclick="toast('Auditing Title Guarantee Layer: State conclusive-titling pilots synchronized.')"
+                class="cursor-pointer glass-card rounded-2xl p-5 border border-brand-border hover:border-emerald-500/60 transition group"
+            >
+
+                <div
+                    class="flex items-center justify-between text-gray-400 text-xs"
+                >
+
+                    <span
+                        class="p-2 rounded-lg bg-emerald-950/70 border border-emerald-800 text-emerald-400"
+                    >
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <span
+                        class="font-mono text-emerald-400 font-bold"
+                    >
+                        +12.4%
+                    </span>
+
+                </div>
+
+
+                <p
+                    class="text-xs text-gray-400 mt-3 font-mono"
+                >
+                    TITLE CERTAINTY
+                </p>
+
+                <p
+                    class="text-2xl sm:text-3xl font-extrabold text-white mt-1 group-hover:text-emerald-400 transition"
+                >
+                    42%
+                </p>
+
+                <p
+                    class="text-[11px] text-gray-400 mt-2"
+                >
+                    Parcels represented within conclusive or state-guaranteed titling frameworks.
+                </p>
+
+                <div
+                    class="w-full bg-gray-800 h-1.5 rounded-full mt-3 overflow-hidden"
+                >
+
+                    <div
+                        class="bg-emerald-500 h-full w-[42%]"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Metric 3 -->
+
+            <div
+                onclick="toast('Auditing Dispute Ledger: Revenue litigation clusters mapped against cadastral boundaries.')"
+                class="cursor-pointer glass-card rounded-2xl p-5 border border-brand-border hover:border-rose-500/60 transition group"
+            >
+
+                <div
+                    class="flex items-center justify-between text-gray-400 text-xs"
+                >
+
+                    <span
+                        class="p-2 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-400"
+                    >
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 9v4"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 17h.01"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <span
+                        class="font-mono text-rose-400 font-bold"
+                    >
+                        -8.2%
+                    </span>
+
+                </div>
+
+
+                <p
+                    class="text-xs text-gray-400 mt-3 font-mono"
+                >
+                    DISPUTE RESOLUTION
+                </p>
+
+                <p
+                    class="text-2xl sm:text-3xl font-extrabold text-white mt-1 group-hover:text-rose-400 transition"
+                >
+                    38%
+                </p>
+
+                <p
+                    class="text-[11px] text-gray-400 mt-2"
+                >
+                    Boundary and encroachment disputes within the active revenue caseload.
+                </p>
+
+                <div
+                    class="w-full bg-gray-800 h-1.5 rounded-full mt-3 overflow-hidden"
+                >
+
+                    <div
+                        class="bg-rose-500 h-full w-[38%]"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Metric 4 -->
+
+            <div
+                onclick="toast('Synchronizing 0.25m Cadastral Orthophotos via Cartosat-3 & SVAMITVA drones.')"
+                class="cursor-pointer glass-card rounded-2xl p-5 border border-brand-border hover:border-cyan-500/60 transition group"
+            >
+
+                <div
+                    class="flex items-center justify-between text-gray-400 text-xs"
+                >
+
+                    <span
+                        class="p-2 rounded-lg bg-cyan-950/70 border border-cyan-800 text-cyan-400"
+                    >
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 10l8 4m0-10v10"
+                            />
+
+                        </svg>
+
+                    </span>
+
+
+                    <span
+                        class="font-mono text-cyan-400 font-bold"
+                    >
+                        Sub-Meter GSD
+                    </span>
+
+                </div>
+
+
+                <p
+                    class="text-xs text-gray-400 mt-3 font-mono"
+                >
+                    GEOSPATIAL RESOLUTION
+                </p>
+
+                <p
+                    class="text-2xl sm:text-3xl font-extrabold text-white mt-1 group-hover:text-cyan-400 transition"
+                >
+                    0.25m
+                </p>
+
+                <p
+                    class="text-[11px] text-gray-400 mt-2"
+                >
+                    High-Res Cadastral Drone Orthophotos + Cartosat-3 Imagery.
+                </p>
+
+                <div
+                    class="w-full bg-gray-800 h-1.5 rounded-full mt-3 overflow-hidden"
+                >
+
+                    <div
+                        class="bg-indigo-500 h-full w-[76%]"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- 4. PARADIGM SHIFT SECTION -->
+    <!-- ===================================================== -->
+
+    <section
+        id="sec-paradigm"
+        class="space-y-4"
+    >
+
+        <div
+            class="text-center max-w-3xl mx-auto"
+        >
+
+            <span
+                class="text-xs font-mono uppercase text-cyan-400 tracking-wider"
+            >
+                Structural Paradigm Shift
+            </span>
+
+
+            <h2
+                class="text-xl sm:text-3xl font-bold text-white mt-1"
+            >
+                The Modernization Architecture
+            </h2>
+
+
+            <p
+                class="text-gray-400 text-xs sm:text-sm mt-1"
+            >
+                Moving from decades of manual, disjointed revenue ledgers
+                to India's first unified, sovereign scientific sandbox
+                for land analytics and legislative modeling.
+            </p>
+
+        </div>
+
+
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4"
+        >
+
+            <!-- Legacy Status Quo Card -->
+
+            <div
+                class="glass-card rounded-2xl p-6 border border-rose-900/40 relative overflow-hidden"
+            >
+
+                <div
+                    class="flex items-center justify-between mb-4"
+                >
+
+                    <span
+                        class="text-rose-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"
+                    >
+
+                        <span
+                            class="w-2 h-2 rounded-full bg-rose-500"
+                        ></span>
+
+                        Legacy Status Quo
+
+                    </span>
+
+
+                    <span
+                        class="px-2 py-0.5 rounded bg-rose-950 text-rose-300 text-[10px] font-mono border border-rose-800"
+                    >
+                        Systemic Bottleneck
+                    </span>
+
+                </div>
+
+
+                <h3
+                    class="text-lg font-bold text-white mb-2"
+                >
+                    Fragmented Implementation Silos
+                </h3>
+
+
+                <p
+                    class="text-xs text-gray-300 leading-relaxed"
+                >
+                    Traditional governance suffers from state-level
+                    divergence in record maintenance, paper mutation logs,
+                    and protracted court battles that hold back national infrastructure.
+                </p>
+
+
+                <div
+                    class="mt-4 space-y-2.5 text-xs text-gray-300"
+                >
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-rose-400 font-bold"
+                        >
+                            ✕
+                        </span>
+
+                        <span>
+                            <strong>Disjointed Spatial Registries:</strong>
+                            Textual Record of Rights (RoR) disconnected
+                            from spatial ground maps.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-rose-400 font-bold"
+                        >
+                            ✕
+                        </span>
+
+                        <span>
+                            <strong>Opaque Land Conversions:</strong>
+                            Unmonitored conversion of prime agrarian belts
+                            to urban fringes.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-rose-400 font-bold"
+                        >
+                            ✕
+                        </span>
+
+                        <span>
+                            <strong>Revenue Litigation:</strong>
+                            Over 66% of civil disputes relate to land,
+                            taking over 12-18 years.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="mt-6 pt-4 border-t border-rose-900/30 flex justify-between items-center text-xs font-mono"
+                >
+
+                    <span
+                        class="text-gray-400"
+                    >
+                        Average Title Dispute Resolution
+                    </span>
+
+                    <span
+                        class="text-rose-400 font-bold"
+                    >
+                        12 - 18 Years
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GeoNiti Paradigm Card -->
+
+            <div
+                class="glass-card rounded-2xl p-6 border border-emerald-800/60 relative overflow-hidden bg-gradient-to-br from-emerald-950/20 via-transparent to-cyan-950/20"
+            >
+
+                <div
+                    class="flex items-center justify-between mb-4"
+                >
+
+                    <span
+                        class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"
+                    >
+
+                        <span
+                            class="w-2 h-2 rounded-full bg-emerald-400"
+                        ></span>
+
+                        The GeoNiti Paradigm
+
+                    </span>
+
+
+                    <span
+                        class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 text-[10px] font-mono border border-emerald-800"
+                    >
+                        Sovereign Standard
+                    </span>
+
+                </div>
+
+
+                <h3
+                    class="text-lg font-bold text-white mb-2"
+                >
+                    Unified Scientific Policy Sandbox
+                </h3>
+
+
+                <p
+                    class="text-xs text-gray-300 leading-relaxed"
+                >
+                    GeoNiti establishes a sovereign digital twin framework,
+                    fusing real-time satellite imagery, AI-driven legal analytics,
+                    and 14-digit geo-coordinates to enable conclusive titling.
+                </p>
+
+
+                <div
+                    class="mt-4 space-y-2.5 text-xs text-gray-300"
+                >
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-emerald-400 font-bold"
+                        >
+                            ✓
+                        </span>
+
+                        <span>
+                            <strong>Conclusive Titling & ULPIN Backbone:</strong>
+                            Torrens-standard state guaranteed titling.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-emerald-400 font-bold"
+                        >
+                            ✓
+                        </span>
+
+                        <span>
+                            <strong>AI Zonary Simulators:</strong>
+                            Machine learning modeling urban spillover and food buffer.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex items-start gap-2"
+                    >
+
+                        <span
+                            class="text-emerald-400 font-bold"
+                        >
+                            ✓
+                        </span>
+
+                        <span>
+                            <strong>Pre-Trial Conciliation:</strong>
+                            NLP indexing of historical judgments to settle disputes faster.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="mt-6 pt-4 border-t border-emerald-800/40 flex justify-between items-center text-xs font-mono"
+                >
+
+                    <span
+                        class="text-gray-400"
+                    >
+                        Automated Pre-validation Verification
+                    </span>
+
+                    <span
+                        class="text-emerald-400 font-bold"
+                    >
+                        &lt; 48 Hours
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!-- 5. SCOPE OF THE STUDY & POLICY MATRIX TABLE (WITH REAL-TIME FILTERING & EXPANSION) -->
+<section id="sec-scope" class="space-y-4">
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+
+        <div>
+            <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider">
+                Institutional Architecture • Gazetted Strategic Matrix
+            </span>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-white">
+                Scope of the Study & Policy Matrix
+            </h2>
+
+            <p class="text-xs text-gray-400">
+                Filter domains or click any row below to expand granular nodal officer,
+                pilot progress, and research outputs.
+            </p>
+        </div>
+
+        <button
+            onclick="exportCSV()"
+            class="self-start sm:self-auto px-3.5 py-1.5 rounded-lg bg-brand-surface hover:bg-gray-800 text-cyan-400 border border-brand-border text-xs font-medium transition flex items-center gap-1.5"
+        >
+            <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+            </svg>
+
+            Export Matrix (.CSV / .PDF)
+        </button>
+
+    </div>
+
+
+    <!-- Filter Buttons -->
+    <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 text-xs">
+
+        <button
+            onclick="filterScopeTable('all', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-cyan-500 text-black font-semibold whitespace-nowrap"
+        >
+            All Vectors (5)
+        </button>
+
+        <button
+            onclick="filterScopeTable('cadastral', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap"
+        >
+            Cadastral & Titling
+        </button>
+
+        <button
+            onclick="filterScopeTable('periurban', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap"
+        >
+            Peri-Urban Dynamics
+        </button>
+
+        <button
+            onclick="filterScopeTable('climate', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap"
+        >
+            Climate Resilience
+        </button>
+
+        <button
+            onclick="filterScopeTable('dispute', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap"
+        >
+            Dispute Mitigation
+        </button>
+
+        <button
+            onclick="filterScopeTable('tribal', this)"
+            class="scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap"
+        >
+            Tribal & Commons
+        </button>
+
+    </div>
+
+
+    <!-- Interactive Table -->
+    <div class="glass-card rounded-2xl border border-brand-border overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full text-left text-xs text-gray-300">
+
+                <thead
+                    class="bg-brand-surface/90 text-gray-400 font-mono text-[11px] uppercase border-b border-brand-border"
+                >
+                    <tr>
+
+                        <th class="py-3.5 px-4">
+                            Strategic Domain
+                        </th>
+
+                        <th class="py-3.5 px-4">
+                            Key Focus Areas
+                        </th>
+
+                        <th class="py-3.5 px-4">
+                            Target Stakeholders
+                        </th>
+
+                        <th class="py-3.5 px-4">
+                            Expected Policy & Empirical Outcome
+                        </th>
+
+                        <th class="py-3.5 px-4">
+                            Govt Ecosystem
+                        </th>
+
+                        <th class="py-3.5 px-4 text-center">
+                            Inspect
+                        </th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody class="divide-y divide-brand-border/60 font-sans">
+
+
+                    <!-- Row 1: Cadastral -->
+                    <tr
+                        data-cat="cadastral"
+                        class="hover:bg-cyan-950/20 transition cursor-pointer"
+                        onclick="toggleScopeDrawer('drawer-1')"
+                    >
+
+                        <td class="py-3.5 px-4 font-semibold text-white">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+
+                                <span>
+                                    Cadastral & Land Titling
+                                </span>
+
+                            </div>
+
+                            <span class="text-[10px] text-gray-400 font-mono">
+                                GN-CAD-01
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+                            Modernizing Record of Rights (RoR), Conclusive Titling pilots,
+                            ULPIN lifecycle maintenance, and drone ground truthing.
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+
+                            <span
+                                class="px-2 py-0.5 rounded bg-brand-surface text-cyan-300 border border-cyan-900/50"
+                            >
+                                State Land Revenue • DoLR
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-emerald-400 font-medium">
+
+                            Zero-Discrepancy Titling Guarantee
+
+                            <br>
+
+                            <span class="text-gray-400 text-[10px]">
+                                De-risks agricultural mortgage collateral.
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 font-mono text-cyan-400">
+                            DILRMP / Bhuvan
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-cyan-400 font-bold">
+                                ↓
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 1 Drawer -->
+                    <tr
+                        id="drawer-1"
+                        class="hidden bg-brand-surface/80 text-xs"
+                    >
+
+                        <td
+                            colspan="6"
+                            class="p-4 border-l-2 border-cyan-400"
+                        >
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Institutional Lead
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        Survey of India & IIT Roorkee
+                                    </p>
+
+                                    <p class="text-[11px] text-gray-400">
+                                        Nodal Officer: Dr. A. Sharma (DoLR Tech Directorate)
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Pilot Geography
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        14,200 Villages across MP, Haryana, & Karnataka
+                                    </p>
+
+                                    <p class="text-[11px] text-emerald-400">
+                                        Milestone: 94.2% Orthorectification complete
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Research Outputs
+                                    </span>
+
+                                    <p class="font-bold text-cyan-400 mt-0.5">
+                                        4 Peer-Reviewed Monographs • 1 Gazette Draft
+                                    </p>
+
+                                    <button
+                                        onclick="toast('Mounting Cadastral GeoPackage to Cloud Notebook...')"
+                                        class="mt-1 text-[11px] text-white bg-cyan-700 px-2.5 py-0.5 rounded hover:bg-cyan-600"
+                                    >
+                                        Mount Data in Lab
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 2: Peri-Urban -->
+                    <tr
+                        data-cat="periurban"
+                        class="hover:bg-cyan-950/20 transition cursor-pointer"
+                        onclick="toggleScopeDrawer('drawer-2')"
+                    >
+
+                        <td class="py-3.5 px-4 font-semibold text-white">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+
+                                <span>
+                                    Peri-Urban Dynamics
+                                </span>
+
+                            </div>
+
+                            <span class="text-[10px] text-gray-400 font-mono">
+                                GN-URB-02
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+                            Zonary transition dynamics, urban fringe spillover tracking,
+                            preventing illegal plotting, and arable food security buffer mapping.
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+
+                            <span
+                                class="px-2 py-0.5 rounded bg-brand-surface text-amber-300 border border-amber-900/50"
+                            >
+                                MoHUA • Town Planning
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-emerald-400 font-medium">
+
+                            Predictive Conversion Tax Ledger
+
+                            <br>
+
+                            <span class="text-gray-400 text-[10px]">
+                                Preserves Class-I fertile soils.
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 font-mono text-cyan-400">
+                            PM GatiShakti
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-cyan-400 font-bold">
+                                ↓
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 2 Drawer -->
+                    <tr
+                        id="drawer-2"
+                        class="hidden bg-brand-surface/80 text-xs"
+                    >
+
+                        <td
+                            colspan="6"
+                            class="p-4 border-l-2 border-amber-400"
+                        >
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Institutional Lead
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        School of Planning & Architecture (SPA) Delhi
+                                    </p>
+
+                                    <p class="text-[11px] text-gray-400">
+                                        Nodal Agency: NCR Planning Board
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Pilot Geography
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        NCR Belt & Bengaluru-Mysuru Growth Corridor
+                                    </p>
+
+                                    <p class="text-[11px] text-amber-400">
+                                        Spillover Velocity: ~42,000 Ha/year
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Deliverable
+                                    </span>
+
+                                    <p class="font-bold text-amber-300 mt-0.5">
+                                        Automated Zonal Masterplan Violation Detector
+                                    </p>
+
+                                    <button
+                                        onclick="toast('Downloading SPA Peri-Urban Framework Whitepaper...')"
+                                        class="mt-1 text-[11px] text-white bg-amber-700 px-2.5 py-0.5 rounded hover:bg-amber-600"
+                                    >
+                                        Download Whitepaper
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 3: Climate -->
+                    <tr
+                        data-cat="climate"
+                        class="hover:bg-cyan-950/20 transition cursor-pointer"
+                        onclick="toggleScopeDrawer('drawer-3')"
+                    >
+
+                        <td class="py-3.5 px-4 font-semibold text-white">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+
+                                <span>
+                                    Climate Vulnerability
+                                </span>
+
+                            </div>
+
+                            <span class="text-[10px] text-gray-400 font-mono">
+                                GN-CLI-03
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+                            Floodplain zoning demarcation, coastal erosion boundary tracking,
+                            drought-prone agrarian land reallocation.
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+
+                            <span
+                                class="px-2 py-0.5 rounded bg-brand-surface text-emerald-300 border border-emerald-900/50"
+                            >
+                                MoEFCC • NDMA • NRSC
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-emerald-400 font-medium">
+
+                            Climate Hazard Valuation
+
+                            <br>
+
+                            <span class="text-gray-400 text-[10px]">
+                                Enforces unbuildable eco-buffers.
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 font-mono text-cyan-400">
+                            Bhuvan Climate
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-cyan-400 font-bold">
+                                ↓
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 3 Drawer -->
+                    <tr
+                        id="drawer-3"
+                        class="hidden bg-brand-surface/80 text-xs"
+                    >
+
+                        <td
+                            colspan="6"
+                            class="p-4 border-l-2 border-emerald-400"
+                        >
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Institutional Lead
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        IIT Madras & INCOIS
+                                    </p>
+
+                                    <p class="text-[11px] text-gray-400">
+                                        Nodal Officer: Coastal Zone Management Authority
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Model Integration
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        CMIP-6 High-Res Downscaled Flood Vectors
+                                    </p>
+
+                                    <p class="text-[11px] text-emerald-400">
+                                        Resolution: 10m Digital Elevation Models
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Ecosystem Action
+                                    </span>
+
+                                    <p class="font-bold text-emerald-300 mt-0.5">
+                                        CRZ-1 Buffer Polygon Ledger
+                                    </p>
+
+                                    <button
+                                        onclick="toast('Activating Inundation Simulation Layer in GIS Twin...')"
+                                        class="mt-1 text-[11px] text-white bg-emerald-700 px-2.5 py-0.5 rounded hover:bg-emerald-600"
+                                    >
+                                        Simulate Inundation
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 4: Dispute -->
+                    <tr
+                        data-cat="dispute"
+                        class="hover:bg-cyan-950/20 transition cursor-pointer"
+                        onclick="toggleScopeDrawer('drawer-4')"
+                    >
+
+                        <td class="py-3.5 px-4 font-semibold text-white">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+
+                                <span>
+                                    Dispute Mitigation
+                                </span>
+
+                            </div>
+
+                            <span class="text-[10px] text-gray-400 font-mono">
+                                GN-JUS-04
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+                            Revenue court backlog analytics, inheritance dispute predictive
+                            modeling, and AI title search tools.
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+
+                            <span
+                                class="px-2 py-0.5 rounded bg-brand-surface text-rose-300 border border-rose-900/50"
+                            >
+                                Department of Justice
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-emerald-400 font-medium">
+
+                            70% Pre-Trial Conciliation Rate
+
+                            <br>
+
+                            <span class="text-gray-400 text-[10px]">
+                                Automates spatial verification in court.
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 font-mono text-cyan-400">
+                            eCourts Portal
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-cyan-400 font-bold">
+                                ↓
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 4 Drawer -->
+                    <tr
+                        id="drawer-4"
+                        class="hidden bg-brand-surface/80 text-xs"
+                    >
+
+                        <td
+                            colspan="6"
+                            class="p-4 border-l-2 border-rose-400"
+                        >
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Institutional Lead
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        NALSAR University of Law & e-Committee
+                                    </p>
+
+                                    <p class="text-[11px] text-gray-400">
+                                        Dataset: 1.2 Million Judicial Decrees Indexed
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        AI Capability
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        Indic Legal LLM Precedent Search
+                                    </p>
+
+                                    <p class="text-[11px] text-rose-400">
+                                        Backlog Reduction Forecast: 41.8% over 3 yrs
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Legal Tech Tool
+                                    </span>
+
+                                    <p class="font-bold text-rose-300 mt-0.5">
+                                        Title Chain Graph Visualizer
+                                    </p>
+
+                                    <button
+                                        onclick="toast('Opening Title Chain Graph Analyzer...')"
+                                        class="mt-1 text-[11px] text-white bg-rose-700 px-2.5 py-0.5 rounded hover:bg-rose-600"
+                                    >
+                                        Open Title Graph
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 5: Tribal -->
+                    <tr
+                        data-cat="tribal"
+                        class="hover:bg-cyan-950/20 transition cursor-pointer"
+                        onclick="toggleScopeDrawer('drawer-5')"
+                    >
+
+                        <td class="py-3.5 px-4 font-semibold text-white">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+
+                                <span>
+                                    Tribal & Commons
+                                </span>
+
+                            </div>
+
+                            <span class="text-[10px] text-gray-400 font-mono">
+                                GN-FOR-05
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+                            FRA 2006 community forest rights boundary digitization,
+                            Common Property Resources ledgering, and pastoral corridors.
+                        </td>
+
+
+                        <td class="py-3.5 px-4">
+
+                            <span
+                                class="px-2 py-0.5 rounded bg-brand-surface text-indigo-300 border border-indigo-900/50"
+                            >
+                                Ministry of Tribal Affairs
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-emerald-400 font-medium">
+
+                            Sovereign Commons Registry
+
+                            <br>
+
+                            <span class="text-gray-400 text-[10px]">
+                                Protects gram sabha tenure rights.
+                            </span>
+
+                        </td>
+
+
+                        <td class="py-3.5 px-4 font-mono text-cyan-400">
+                            Van Dhan Spatial MIS
+                        </td>
+
+
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-cyan-400 font-bold">
+                                ↓
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Row 5 Drawer -->
+                    <tr
+                        id="drawer-5"
+                        class="hidden bg-brand-surface/80 text-xs"
+                    >
+
+                        <td
+                            colspan="6"
+                            class="p-4 border-l-2 border-indigo-400"
+                        >
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Institutional Lead
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        TISS Mumbai & TRIFED
+                                    </p>
+
+                                    <p class="text-[11px] text-gray-400">
+                                        Covering Schedule V & VI Areas
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Cadastral Status
+                                    </span>
+
+                                    <p class="font-bold text-white mt-0.5">
+                                        48,000 CFR Patta Boundaries Mapped
+                                    </p>
+
+                                    <p class="text-[11px] text-indigo-400">
+                                        Geofenced against unconsented diversion
+                                    </p>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="text-[10px] font-mono text-gray-400 uppercase">
+                                        Consortium Sandbox
+                                    </span>
+
+                                    <p class="font-bold text-indigo-300 mt-0.5">
+                                        Gram Sabha Boundary Ledger
+                                    </p>
+
+                                    <button
+                                        onclick="toast('Accessing Forest Rights Boundary Explorer...')"
+                                        class="mt-1 text-[11px] text-white bg-indigo-700 px-2.5 py-0.5 rounded hover:bg-indigo-600"
+                                    >
+                                        Explore CFR Map
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- 6. INTERACTIVE WORKBENCHES SECTION -->
+<section id="sec-workbenches" class="space-y-4">
+
+    <div>
+
+        <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider">
+            Applied Governance Workbenches
+        </span>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-white">
+            Institutional Interactive Modules
+        </h2>
+
+        <p class="text-xs text-gray-400">
+            Click any card to open the live sandbox or simulator modal.
+        </p>
+
+    </div>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+
+        <!-- Module 1 -->
+        <div
+            onclick="openModal('modal-gis')"
+            class="glass-card rounded-2xl p-5 border border-brand-border hover:border-cyan-500 cursor-pointer transition flex flex-col justify-between group"
+        >
+
+            <div>
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-800 flex items-center justify-center text-cyan-400 mb-3 group-hover:scale-105 transition"
+                >
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                        />
+                    </svg>
+
+                </div>
+
+
+                <h3 class="font-bold text-white text-base group-hover:text-cyan-400 transition">
+                    GIS Digital Twin
+                </h3>
+
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Explore 0.25m multi-spectral layers, continuous CORS drone maps,
+                    and parcel overlays in high-risk zones.
+                </p>
+
+            </div>
+
+
+            <span
+                class="text-xs font-semibold text-cyan-400 mt-4 flex items-center gap-1 group-hover:translate-x-1 transition"
+            >
+                Launch Console →
+            </span>
+
+        </div>
+
+
+        <!-- Module 2 -->
+        <div
+            onclick="openModal('modal-simulator')"
+            class="glass-card rounded-2xl p-5 border border-brand-border hover:border-emerald-500 cursor-pointer transition flex flex-col justify-between group"
+        >
+
+            <div>
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 mb-3 group-hover:scale-105 transition"
+                >
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                    </svg>
+
+                </div>
+
+
+                <h3 class="font-bold text-white text-base group-hover:text-emerald-400 transition">
+                    AI Policy Simulator
+                </h3>
+
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Run probabilistic economic simulations on stamp duty variations,
+                    tenancy duration, and agricultural yield.
+                </p>
+
+            </div>
+
+
+            <span
+                class="text-xs font-semibold text-emerald-400 mt-4 flex items-center gap-1 group-hover:translate-x-1 transition"
+            >
+                Configure Parameters →
+            </span>
+
+        </div>
+
+
+        <!-- Module 3 -->
+        <div
+            onclick="openModal('modal-sandbox')"
+            class="glass-card rounded-2xl p-5 border border-brand-border hover:border-amber-500 cursor-pointer transition flex flex-col justify-between group"
+        >
+
+            <div>
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-amber-950 border border-amber-800 flex items-center justify-center text-amber-400 mb-3 group-hover:scale-105 transition"
+                >
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7z"
+                        />
+                    </svg>
+
+                </div>
+
+
+                <h3 class="font-bold text-white text-base group-hover:text-amber-400 transition">
+                    Open Sovereign Sandbox
+                </h3>
+
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Query privacy-protected anonymized parcel ledgers,
+                    historical mutation files, and agricultural yield records.
+                </p>
+
+            </div>
+
+
+            <span
+                class="text-xs font-semibold text-amber-400 mt-4 flex items-center gap-1 group-hover:translate-x-1 transition"
+            >
+                Query Datasets →
+            </span>
+
+        </div>
+
+
+        <!-- Module 4 -->
+        <div
+            onclick="openModal('modal-rfp')"
+            class="glass-card rounded-2xl p-5 border border-brand-border hover:border-indigo-500 cursor-pointer transition flex flex-col justify-between group"
+        >
+
+            <div>
+
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-3 group-hover:scale-105 transition"
+                >
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                    </svg>
+
+                </div>
+
+
+                <h3 class="font-bold text-white text-base group-hover:text-indigo-400 transition">
+                    Research RFP Call
+                </h3>
+
+
+                <p class="text-xs text-gray-400 mt-2">
+                    Submit empirical proposals on conclusive titling,
+                    peri-urban dynamics, and tribal land preservation.
+                </p>
+
+            </div>
+
+
+            <span
+                class="text-xs font-semibold text-indigo-400 mt-4 flex items-center gap-1 group-hover:translate-x-1 transition"
+            >
+                Submit Grant Dossier →
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer
+    class="mt-auto border-t border-brand-border/80 glass-nav py-6 px-4 lg:px-8 text-xs text-gray-400"
+>
+
+    <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+    >
+
+        <div class="flex items-center gap-2">
+
+            <span class="font-bold text-white">
+                GeoNiti Sovereign Registry
+            </span>
+
+            <span>
+                • Joint Initiative of NITI Aayog, MoRD & DST
+            </span>
+
+        </div>
+
+
+        <div
+            class="flex items-center gap-4 text-[11px] font-mono text-gray-400"
+        >
+
+            <span class="flex items-center gap-1 text-emerald-400">
+
+                <span
+                    class="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                ></span>
+
+                STQC Certified Level-3
+
+            </span>
+
+            <span>
+                ISO 19152 LADM Compliant
+            </span>
+
+            <span>
+                NIC Server Node: New Delhi Central
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= INTERACTIVE MODALS ================= -->
+
+
+<!-- MODAL 1: GIS Digital Twin Inspector -->
+<div
+    id="modal-gis"
+    class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+>
+
+    <div
+        class="glass-card max-w-3xl w-full rounded-2xl border border-cyan-500/50 p-6 space-y-4"
+    >
+
+        <div
+            class="flex items-center justify-between pb-3 border-b border-brand-border"
+        >
+
+            <div>
+
+                <span
+                    class="text-[10px] font-mono text-cyan-400 uppercase"
+                >
+                    Spatial Digital Twin Node
+                </span>
+
+                <h3 class="text-lg font-bold text-white">
+                    ULPIN Cadastral Ground Inspector (0.25m GSD)
+                </h3>
+
+            </div>
+
+
+            <button
+                onclick="closeModal('modal-gis')"
+                class="text-gray-400 hover:text-white text-lg font-bold"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            class="h-64 rounded-xl bg-gradient-to-tr from-cyan-950/80 via-brand-dark to-emerald-950/80 border border-brand-border p-4 flex flex-col justify-between relative overflow-hidden"
+        >
+
+            <div
+                class="absolute inset-0 opacity-30 pointer-events-none"
+                style="background-image: radial-gradient(#06b6d4 1.5px, transparent 1.5px); background-size: 24px 24px;"
+            ></div>
+
+
+            <div class="z-10 flex justify-between">
+
+                <span
+                    class="bg-black/70 px-2 py-1 rounded text-xs font-mono text-cyan-300"
+                >
+                    Target Parcel: ULPIN-27-025-014-99812-4
+                </span>
+
+
+                <span
+                    class="bg-emerald-950 px-2 py-1 rounded text-xs font-mono text-emerald-400 border border-emerald-800"
+                >
+                    Clear Title • Torrens Ready
+                </span>
+
+            </div>
+
+
+            <div class="z-10 flex flex-wrap gap-2">
+
+                <button
+                    onclick="toast('Toggled NDVI Multi-Spectral Layer')"
+                    class="text-[11px] px-2.5 py-1 rounded bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700"
+                >
+                    NDVI Multi-spectral
+                </button>
+
+
+                <button
+                    onclick="toast('Toggled 50-Year Flood Risk Return Contour')"
+                    class="text-[11px] px-2.5 py-1 rounded bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700"
+                >
+                    50-Yr Flood Zone
+                </button>
+
+
+                <button
+                    onclick="toast('Toggled Cadastral Ground Boundaries')"
+                    class="text-[11px] px-2.5 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-600"
+                >
+                    Cadastral Boundary
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex justify-between items-center pt-2">
+
+            <span class="text-xs text-gray-400 font-mono">
+                Bhuvan / CartoSat-3 Sync Latency: 12ms
+            </span>
+
+
+            <button
+                onclick="closeModal('modal-gis')"
+                class="px-4 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold"
+            >
+                Done Inspecting
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL 2: AI Policy Simulator -->
+<div
+    id="modal-simulator"
+    class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+>
+
+    <div
+        class="glass-card max-w-2xl w-full rounded-2xl border border-emerald-500/50 p-6 space-y-4"
+    >
+
+        <div
+            class="flex items-center justify-between pb-3 border-b border-brand-border"
+        >
+
+            <div>
+
+                <span
+                    class="text-[10px] font-mono text-emerald-400 uppercase"
+                >
+                    Bayesian Predictive Sandbox
+                </span>
+
+                <h3 class="text-lg font-bold text-white">
+                    NitiPredict v4.2 Policy Simulator
+                </h3>
+
+            </div>
+
+
+            <button
+                onclick="closeModal('modal-simulator')"
+                class="text-gray-400 hover:text-white text-lg font-bold"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <!-- Live Interactive Slider -->
+        <div class="space-y-4 text-xs">
+
+            <div>
+
+                <div class="flex justify-between text-gray-300 mb-1">
+
+                    <span>
+                        Guaranteed Tenancy Duration (Leasehold Reform)
+                    </span>
+
+                    <span
+                        id="slider-tenure-val"
+                        class="font-mono text-emerald-400 font-bold"
+                    >
+                        5 Years
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    min="1"
+                    max="15"
+                    value="5"
+                    oninput="updateSim(this.value)"
+                    class="w-full accent-emerald-500 cursor-pointer"
+                />
+
+            </div>
+
+
+            <div class="grid grid-cols-3 gap-3 text-center pt-2">
+
+                <div
+                    class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+                >
+
+                    <span class="text-[10px] text-gray-400">
+                        Formal Credit Uptake
+                    </span>
+
+                    <p
+                        id="sim-credit"
+                        class="text-lg font-bold text-emerald-400 mt-1"
+                    >
+                        +34.2%
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+                >
+
+                    <span class="text-[10px] text-gray-400">
+                        Litigation Drop
+                    </span>
+
+                    <p
+                        id="sim-litigation"
+                        class="text-lg font-bold text-cyan-400 mt-1"
+                    >
+                        -41.8%
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+                >
+
+                    <span class="text-[10px] text-gray-400">
+                        Exchequer Stamp Yield
+                    </span>
+
+                    <p
+                        id="sim-yield"
+                        class="text-lg font-bold text-amber-400 mt-1"
+                    >
+                        +₹480 Cr
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flex justify-between items-center pt-3 border-t border-brand-border"
+        >
+
+            <span class="text-xs text-gray-400 font-mono">
+                50,000 Monte Carlo Iterations
+            </span>
+
+
+            <button
+                onclick="toast('Simulation Results Package Signed with SHA256 Hash.'); closeModal('modal-simulator')"
+                class="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold"
+            >
+                Apply Scenario
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL 3: Sandboxed Datasets -->
+<div
+    id="modal-sandbox"
+    class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+>
+
+    <div
+        class="glass-card max-w-xl w-full rounded-2xl border border-amber-500/50 p-6 space-y-4"
+    >
+
+        <div
+            class="flex items-center justify-between pb-3 border-b border-brand-border"
+        >
+
+            <div>
+
+                <span
+                    class="text-[10px] font-mono text-amber-400 uppercase"
+                >
+                    Sovereign Data Node
+                </span>
+
+                <h3 class="text-lg font-bold text-white">
+                    Open Data Research Sandbox
+                </h3>
+
+            </div>
+
+
+            <button
+                onclick="closeModal('modal-sandbox')"
+                class="text-gray-400 hover:text-white text-lg font-bold"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="space-y-3">
+
+            <div
+                class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+            >
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm font-bold text-white">
+                            Anonymized Parcel Ledger
+                        </p>
+
+                        <p class="text-[11px] text-gray-400">
+                            32.8 Cr synthetic ULPIN-linked records
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800"
+                    >
+                        AVAILABLE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+            >
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm font-bold text-white">
+                            Historical Mutation Files
+                        </p>
+
+                        <p class="text-[11px] text-gray-400">
+                            Digitized mutation and ownership transition records
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800"
+                    >
+                        AVAILABLE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="p-3 rounded-xl bg-brand-surface border border-brand-border"
+            >
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm font-bold text-white">
+                            Agricultural Yield Records
+                        </p>
+
+                        <p class="text-[11px] text-gray-400">
+                            Historical crop yield and land-use datasets
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="text-[10px] px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800"
+                    >
+                        RESTRICTED
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="flex justify-end pt-2 border-t border-brand-border"
+        >
+
+            <button
+                onclick="toast('Sandbox authentication token generated.'); closeModal('modal-sandbox')"
+                class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold"
+            >
+                Request Dataset Access
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL 4: Research RFP -->
+<div
+    id="modal-rfp"
+    class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+>
+    <div
+        class="glass-card max-w-xl w-full rounded-2xl border border-indigo-500/50 p-6 space-y-4"
+    >
+        <div
+            class="flex items-center justify-between pb-3 border-b border-brand-border"
+        >
+            <div>
+                <span
+                    class="text-[10px] font-mono text-indigo-400 uppercase"
+                >
+                    DST & MoRD Grants
+                </span>
+
+                <h3 class="text-lg font-bold text-white">
+                    Submit Research RFP Grant Proposal
+                </h3>
+            </div>
+
+            <button
+                onclick="closeModal('modal-rfp')"
+                class="text-gray-400 hover:text-white text-lg font-bold"
+            >
+                ✕
+            </button>
+        </div>
+
+        <form
+            onsubmit="event.preventDefault(); toast('Proposal Submitted to NITI Aayog Scientific Panel!'); closeModal('modal-rfp');"
+            class="space-y-3 text-xs"
+        >
+            <div>
+                <label class="text-gray-400 block mb-1">
+                    Principal Investigator & Institution
+                </label>
+
+                <input
+                    required
+                    type="text"
+                    placeholder="e.g. Dr. K. Raman, IIT Madras"
+                    class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 text-white outline-none focus:border-indigo-400"
+                />
+            </div>
+
+            <div>
+                <label class="text-gray-400 block mb-1">
+                    Target Research Vector
+                </label>
+
+                <select
+                    class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 text-white outline-none focus:border-indigo-400"
+                >
+                    <option>Cadastral Boundary AI Segmentation</option>
+                    <option>Peri-Urban Arable Land Protection</option>
+                    <option>Tribal FRA 2006 Digital Ledger</option>
+                    <option>Coastal Inundation Cadastral Defense</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button
+                    type="button"
+                    onclick="closeModal('modal-rfp')"
+                    class="px-3 py-1.5 rounded-lg bg-gray-800 text-gray-300"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="px-4 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-bold"
+                >
+                    Submit Application
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div
+    id="toast"
+    class="fixed bottom-6 right-6 z-50 hidden px-4 py-2.5 rounded-xl bg-gray-900 border border-cyan-500 text-cyan-300 text-xs shadow-2xl font-mono flex items-center gap-2"
+>
+    <span
+        class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"
+    ></span>
+
+    <span id="toast-msg">
+        Notification
+    </span>
+</div>
+
+
+<!-- ================= JAVASCRIPT LOGIC ================= -->
+
+<script>
+
+    // 1. Navigation Smooth Scrolling & Active State
+
+    function scrollToSec(secId, btnElement) {
+
+        const el = document.getElementById(secId);
+
+        if (el) {
+
+            el.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            // Update active classes on nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+
+                btn.className =
+                    "nav-btn px-3 py-1 rounded-md text-gray-400 hover:text-gray-200 hover:bg-brand-border/40 whitespace-nowrap transition";
+
+            });
+
+            if (btnElement) {
+
+                btnElement.className =
+                    "nav-btn px-3 py-1 rounded-md text-cyan-400 bg-cyan-950/50 border border-cyan-800 font-semibold whitespace-nowrap";
+
+            }
+        }
+    }
+
+
+    // 2. Modals Control
+
+    function openModal(id) {
+
+        document.getElementById(id).classList.remove('hidden');
+
+    }
+
+
+    function closeModal(id) {
+
+        document.getElementById(id).classList.add('hidden');
+
+    }
+
+
+    // 3. Interactive Donut Chart Filtering (Tenure)
+
+    function filterTenure(type) {
+
+        const centerVal =
+            document.getElementById('tenure-center-val');
+
+        const centerSub =
+            document.getElementById('tenure-center-sub');
+
+        const insight =
+            document.getElementById('tenure-insight-box');
+
+
+        if (type === 'conclusive') {
+
+            centerVal.innerText = '13.7 Cr';
+
+            centerSub.innerText = '42% Conclusive';
+
+            insight.innerHTML =
+                "<span><strong>Conclusive Titling:</strong> 13.7 Crore parcels backed by state-guaranteed Torrens indemnity.</span>" +
+                "<button onclick='resetTenure()' class='text-cyan-400 text-[11px] underline'>Reset</button>";
+
+        }
+
+        else if (type === 'svamitva') {
+
+            centerVal.innerText = '9.2 Cr';
+
+            centerSub.innerText = '28% SVAMITVA';
+
+            insight.innerHTML =
+                "<span><strong>SVAMITVA Drone Survey:</strong> 9.2 Crore inhabited rural abadi parcels with digitized property cards.</span>" +
+                "<button onclick='resetTenure()' class='text-cyan-400 text-[11px] underline'>Reset</button>";
+
+        }
+
+        else if (type === 'litigation') {
+
+            centerVal.innerText = '5.9 Cr';
+
+            centerSub.innerText = '18% In Dispute';
+
+            insight.innerHTML =
+                "<span><strong>Active Litigation:</strong> 5.9 Crore contested titles awaiting revenue tehsildar adjudication.</span>" +
+                "<button onclick='resetTenure()' class='text-cyan-400 text-[11px] underline'>Reset</button>";
+
+        }
+
+        else if (type === 'unsurveyed') {
+
+            centerVal.innerText = '4.0 Cr';
+
+            centerSub.innerText = '12% Unsurveyed';
+
+            insight.innerHTML =
+                "<span><strong>Unsurveyed Areas:</strong> 4.0 Crore parcels in hilly, forest, and historical unsurveyed pockets.</span>" +
+                "<button onclick='resetTenure()' class='text-cyan-400 text-[11px] underline'>Reset</button>";
+
+        }
+    }
+
+
+    function resetTenure() {
+
+        document.getElementById('tenure-center-val').innerText =
+            '32.8 Cr';
+
+        document.getElementById('tenure-center-sub').innerText =
+            '100% Parcels';
+
+        document.getElementById('tenure-insight-box').innerHTML =
+            "<span>Leading implementation in Karnataka, Haryana, and Gujarat under Torrens-guaranteed frameworks.</span>" +
+            "<button onclick='resetTenure()' class='text-cyan-400 hover:underline text-[11px] font-mono'>Reset</button>";
+
+    }
+
+
+    // 4. Interactive Dispute Caseload Filtering
+
+    function filterDispute(type) {
+
+        const centerVal =
+            document.getElementById('dispute-center-val');
+
+        const insight =
+            document.getElementById('dispute-insight-box');
+
+
+        if (type === 'boundary') {
+
+            centerVal.innerText = '38%';
+
+            insight.innerHTML =
+                "<span><strong>Boundary Encroachments:</strong> Solved through high-precision 0.25m drone orthophotos and CORS networks.</span>" +
+                "<span class='text-rose-400 font-mono text-[11px] ml-2'>Avg: 8.4 Yrs</span>";
+
+        }
+
+        else if (type === 'title') {
+
+            centerVal.innerText = '34%';
+
+            insight.innerHTML =
+                "<span><strong>Title & Inheritance:</strong> Resolved by linking succession gene-trees with digital RoRs.</span>" +
+                "<span class='text-rose-400 font-mono text-[11px] ml-2'>Avg: 11.2 Yrs</span>";
+
+        }
+
+        else if (type === 'tenancy') {
+
+            centerVal.innerText = '16%';
+
+            insight.innerHTML =
+                "<span><strong>Tenancy & Leasehold:</strong> Standardized via NITI Aayog Model Agricultural Land Leasing Act.</span>" +
+                "<span class='text-sky-400 font-mono text-[11px] ml-2'>Avg: 5.6 Yrs</span>";
+
+        }
+
+        else if (type === 'eminent') {
+
+            centerVal.innerText = '12%';
+
+            insight.innerHTML =
+                "<span><strong>Eminent Domain:</strong> Streamlined through automated RFCTLARR compensation escrow accounts.</span>" +
+                "<span class='text-emerald-400 font-mono text-[11px] ml-2'>Avg: 7.1 Yrs</span>";
+
+        }
+    }
+
+
+    // 5. Scope of Study Table Filtering
+
+    function filterScopeTable(cat, btn) {
+
+        document.querySelectorAll('.scope-filter-btn').forEach(b => {
+
+            b.className =
+                'scope-filter-btn px-3 py-1 rounded-full bg-brand-surface hover:bg-gray-800 text-gray-300 border border-brand-border whitespace-nowrap';
+
+        });
+
+        btn.className =
+            'scope-filter-btn px-3 py-1 rounded-full bg-cyan-500 text-black font-semibold whitespace-nowrap';
+
+
+        const rows =
+            document.querySelectorAll('tbody tr[data-cat]');
+
+
+        rows.forEach(r => {
+
+            if (
+                cat === 'all' ||
+                r.getAttribute('data-cat') === cat
+            ) {
+
+                r.classList.remove('hidden');
+
+            }
+
+            else {
+
+                r.classList.add('hidden');
+
+            }
+
+        });
+    }
+
+
+    // 6. Toggle Table Drawers
+
+    function toggleScopeDrawer(drawerId) {
+
+        const drawer =
+            document.getElementById(drawerId);
+
+        if (drawer) {
+
+            drawer.classList.toggle('hidden');
+
+        }
+    }
+
+
+    // 7. Policy Simulator Slider Update
+
+    function updateSim(val) {
+
+        document.getElementById('slider-tenure-val').innerText =
+            val + ' Years';
+
+
+        const credit =
+            (20 + (val * 2.8)).toFixed(1);
+
+        const lit =
+            (25 + (val * 3.3)).toFixed(1);
+
+        const stamp =
+            250 + (val * 46);
+
+
+        document.getElementById('sim-credit').innerText =
+            '+' + credit + '%';
+
+        document.getElementById('sim-litigation').innerText =
+            '-' + lit + '%';
+
+        document.getElementById('sim-yield').innerText =
+            '+₹' + stamp + ' Cr';
+    }
+
+
+    // 8. Toast Feedback Utility
+
+    function toast(message) {
+
+        const toastEl =
+            document.getElementById('toast');
+
+        const msgEl =
+            document.getElementById('toast-msg');
+
+
+        msgEl.innerText = message;
+
+        toastEl.classList.remove('hidden');
+
+
+        setTimeout(() => {
+
+            toastEl.classList.add('hidden');
+
+        }, 3500);
+    }
+
+
+    // 9. Simulated CSV Export
+
+    function exportCSV() {
+
+        toast(
+            "Exporting 'GeoNiti_Strategic_Scope_Matrix_2025.csv' to downloads..."
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
